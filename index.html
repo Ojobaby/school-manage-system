@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js">
+    <link rel="stylesheet" href="fontawesome-free-7.2.0-web/css/all.css">
+</head>
+<style>
+    button {
+        font-size: 1.8rem;
+        font-weight: bold;
+        padding: 5px;
+        background-color: darkblue;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        box-shadow: 0px 3px 4px 4px white;
+        transition: 3s linear;
+        display: block;
+        width: 100%;
+        margin: 5px auto;
+
+        &:hover {
+            transform: translateX(3px);
+        }
+    }
+
+    #arith_input{
+        font-size: 1.5rem;
+        border: none;
+        border-left: 4px solid darkblue;
+        border-right: 4px solid darkblue;
+        border-radius: 10px;
+
+    }
+</style>
+
+<body>
+    <div class="container  mx-auto row my-4">
+        <div class="col-md-6 col-12">
+            <div class="cal-hist d-sm-none "></div>
+        </div>
+        <div class="col-md-6 col-12">
+            <div class="container">
+
+                <div class="row container mx-auto py-2 border border-primary shadow rounded-3">
+                    <div class="col-12 py-2">
+                        <div id="display" class="bg-secondary p-4 rounded-3 fw-bold" style="height: 60px;"></div>
+                    </div>
+                    <div class="col-12 py-2">
+                        <input type="text" id="arith_input" class="form-control">
+                    </div>
+                    <div class="col-3">
+                        <button id="clear-all-btn">C</button>
+                    </div>
+                    <div class="col-3">
+                        <button onclick=`${calc_button('(')}`>(</button>
+                    </div>
+                    <div class="col-3">
+                        <button onclick=`${calc_button(')')}`>)</button>
+                    </div>
+                    <div class="col-3">
+                        <button onclick="calc_button('^')">^</button>
+                    </div>
+                    <div class="col-3">
+                        <button type="button" id="clear-btn"> <i class="fa-solid fa-eraser"></i></button>
+                    </div>
+                    <div class="col-3">
+                        <button onclick="calc_button(7)">7</button>
+                    </div>
+                    <div class="col-3">
+                        <button onclick="calc_button(8)">8</button>
+                    </div>
+                    <div class="col-3">
+                        <button onclick="calc_button(9)">9</button>
+                    </div>
+                    <div class="col-3">
+                        <button onclick="calc_button('*')"><i class="fa-solid fa-times"></i></button>
+                    </div>
+                    <div class="col-3">
+                        <button onclick="calc_button(4)">4</button>
+                    </div>
+                    <div class="col-3">
+                        <button onclick="calc_button(5)">5</button>
+                    </div>
+                    <div class="col-3">
+                        <button onclick="calc_button(6)">6</button>
+                    </div>
+                    <div class="col-3">
+                        <button onclick="calc_button('-')">-</button>
+                    </div>
+                    <div class="col-3">
+                        <button onclick="calc_button(1)">1</button>
+                    </div>
+                    <div class="col-3">
+                        <button onclick="calc_button(2)">2</button>
+                    </div>
+                    <div class="col-3">
+                        <button onclick="calc_button(3)">3</button>
+                    </div>
+                    <div class="col-3">
+                        <button onclick="calc_button('+')">+</button>
+                    </div>
+                    <div class="col-3">
+                        <button onclick="calc_button(0)">0</button>
+                    </div>
+                    <div class="col-3">
+                        <button onclick="calc_button('00')">00</button>
+                    </div>
+                    <div class="col-3">
+                        <button onclick="calc_button('.')">.</button>
+                    </div>
+                    <div class="col-3">
+                        <button onclick="calc_button('/')">/</button>
+                    </div>
+                    <div class="col-3">
+                        <button onclick="calc_button('000')">000</button>
+                    </div>
+                    <div class="col-3">
+                        <button onclick="calc_button('%')">%</button>
+                    </div>
+                    <div class="col-3">
+                        <button onclick="solve()">=</button>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
+
+<script>
+    let arith_input = document.getElementById('arith_input');
+    function calc_button(n) {
+        arith_input.value += n
+
+    }
+    function solve() {
+        let display = document.getElementById('display');
+        display.innerHTML = `${arith_input.value} = ${eval(arith_input.value)}`;
+        let hist = document.querySelector('.cal-hist');
+        hist.innerHTML += `<p>${arith_input.value} = ${eval(arith_input.value)}</p>`;
+        arith_input.value = eval(arith_input.value)
+    }
+    let clear_btn = document.getElementById('clear-btn');
+    clear_btn.addEventListener('click', function () {
+        arith_input.value = arith_input.value.slice(0, -1)
+    })
+    let clear_all_btn = document.getElementById('clear-all-btn');
+    clear_all_btn.addEventListener('click', function () {
+        arith_input.value = ""
+        document.getElementById('display').innerText = "";
+
+
+    })
+</script>
+
+</html>
